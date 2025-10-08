@@ -36,20 +36,12 @@
 
             newEnemy.SetName(" ");
 
-            Assert.Empty(newEnemy.GetName());
+            Assert.Null(newEnemy.GetName());
         }
 
-        [Fact]
+        
 
-        public void EnemyName_TheNameCannotBeEmptty()
-        {
-            Enemy newEnemy = new Enemy();
-
-            newEnemy.SetName(" ");
-
-            Assert.Empty(newEnemy.GetName());
-        }
-
+        
     }
             
 }
