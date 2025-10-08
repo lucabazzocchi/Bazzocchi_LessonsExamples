@@ -39,8 +39,17 @@
             Assert.Empty(newEnemy.GetName());
         }
 
-        // prova2
-            
+        [Fact]
+
+        public void EnemyName_TheNameCannotBeEmptty()
+        {
+            Enemy newEnemy = new Enemy();
+
+            newEnemy.SetName(" ");
+
+            Assert.Empty(newEnemy.GetName());
+        }
+
     }
             
 }
