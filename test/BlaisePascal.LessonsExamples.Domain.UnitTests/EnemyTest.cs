@@ -27,6 +27,19 @@
             newEnemy.SetName(null);
             Assert.Null(newEnemy.GetName());
         }
+
+        [Fact]
+
+        public void EnemyName_TheNameCannotBeEmpty()
+        {
+            Enemy newEnemy = new Enemy();
+
+            newEnemy.SetName(" ");
+
+            Assert.Empty(newEnemy.GetName());
+        }
+
+        // prova2
             
     }
             
