@@ -25,7 +25,9 @@
 
             //Act
             newEnemy.SetName(null);
-            Assert.Null(newEnemy.GetName());
+
+            //Assert
+            Assert.NotNull(newEnemy.GetName());
         }
 
         [Fact]
@@ -40,8 +42,129 @@
         }
 
         
+        [Fact]
+        public void EnemyHealth_NewHealthMustBePositive()
+        {
+            //Arrange 
+            Enemy newEnemy = new Enemy();
 
+            //Act
+            newEnemy.SetHealth(1);
+
+            //Assert
+            Assert.Equal(1, newEnemy.Health); //Health solo perchè l'abbiamo resa una property, sennò newEnemy.getHealth()
+        }
+
+
+        [Fact]
         
+        public void EnemyHealth_HealthCannotBeOver100()
+        {
+            //Arrange
+            Enemy newEnemy = new Enemy();
+
+            //Act
+            newEnemy.SetHealth(100);
+            newEnemy.SetHealth(101);
+
+            //Assert
+            Assert.Equal(100, newEnemy.Health);
+
+        }
+
+        [Fact]
+
+        public void EnemyHealth_HealthCannotBeNegative()
+        {
+            //Arrange
+            Enemy newEnemy = new Enemy();
+
+            //Act
+            newEnemy.SetHealth(100);
+            newEnemy.SetHealth(-3);
+
+            //Assert
+            Assert.Equal(100, newEnemy.Health);
+
+
+        }
+        [Fact]
+        public void EnemyHealth_HealthCanBeBetween_1And100()
+        {
+            //Assert
+            Enemy newEnemy = new Enemy();
+
+            //Act
+            newEnemy.SetHealth(32);
+
+            //Assert
+            Assert.Equal(32, newEnemy.Health);
+
+        }
+
+        [Fact]
+        public void TakeDamage_WhenTheEnemyIsAlive_AndDamageIsMinorThanHealthThenTakeDamage()
+        {
+            //Arrange
+            Enemy newEnemy = new Enemy();
+
+            //Act
+            newEnemy.SetHealth(100);
+            newEnemy.IsEnemyAlive();
+            newEnemy.TakeDamage(20);
+           
+            //Assert
+            Assert.Equal(80, newEnemy.Health);
+            
+        }
+
+        [Fact]
+        public void TakeDamage_WhenDamageIsNegativeHealthDoesNotDecrease()
+        {
+            //Arrange
+            Enemy newEnemy = new Enemy();
+
+            //Act
+            newEnemy.SetHealth(100);
+            newEnemy.IsEnemyAlive();
+            newEnemy.TakeDamage(-20);
+
+            //Assert
+            Assert.Equal(100, newEnemy.Health);
+
+        }
+
+        [Fact]
+        public void TakeDamage_WhenDamageIsBiggerThanHealth_HealthIs0()
+        {
+            //Arrange
+            Enemy newEnemy = new Enemy();
+
+            //Act
+            newEnemy.SetHealth(100);
+            newEnemy.IsEnemyAlive();
+            newEnemy.TakeDamage(120);
+
+            //Assert
+            Assert.Equal(0, newEnemy.Health);
+
+        }
+
+        [Fact]
+        public void TakeDamage_WhenDamageIsEqualToHealth_HealthIs0()
+        {
+            //Arrange
+            Enemy newEnemy = new Enemy();
+
+            //Act
+            newEnemy.SetHealth(100);
+            newEnemy.IsEnemyAlive();
+            newEnemy.TakeDamage(100);
+
+            //Assert
+            Assert.Equal(0, newEnemy.Health);
+
+        }
     }
             
 }
