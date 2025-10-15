@@ -184,7 +184,7 @@
             newEnemy.Heal(-10);
 
             //Assert
-            Assert.Throws<ArgumentException>
+            
         }
     }
             

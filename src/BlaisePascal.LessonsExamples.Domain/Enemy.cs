@@ -32,8 +32,7 @@
         public bool IsAlive => Health > 0;
         public int Health { get; private set; }
 
-        private const int MaxHealth = 100;
-        private const int MinHealth = 0;
+       
 
 
         // Constructor
@@ -51,7 +50,7 @@
 
         public Enemy(string name, int health)
         {
-            SetName(name);
+            Name = CharacterValidator.ValidateName(name);
             SetHealth(health);
 
         }
@@ -93,7 +92,7 @@
             
             if (damage < Health && IsAlive == true)
                 {
-                    Health = Math.Max(MinHealth, Health - damage);  //prende il massimo fra due numeri quindi se health va sotto 0 prende 0
+                    Health = Math.Max(CharacterValidator.MinHealth, Health - damage);  //prende il massimo fra due numeri quindi se health va sotto 0 prende 0
                     //Health -= damage;
                 }
                 else
@@ -108,7 +107,7 @@
         {
             if (int.IsNegative(healAmount))
                 throw new ArgumentException("heal amount cannot be negative");
-            Health = Math.Min(MaxHealth, Health += healAmount);
+            Health = Math.Min(CharacterValidator.MaxHealth, Health += healAmount);
         }
 
     }
