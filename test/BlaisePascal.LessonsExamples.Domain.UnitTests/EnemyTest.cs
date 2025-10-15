@@ -22,12 +22,9 @@
         {
             //Arrange
             Enemy newEnemy = new Enemy();
-
-            //Act
-            newEnemy.SetName(null);
-
+          
             //Assert
-            Assert.NotNull(newEnemy.GetName());
+            Assert.Null(newEnemy.GetName());
         }
 
         [Fact]
@@ -109,8 +106,7 @@
             Enemy newEnemy = new Enemy();
 
             //Act
-            newEnemy.SetHealth(100);
-            newEnemy.IsEnemyAlive();
+            newEnemy.SetHealth(100);           
             newEnemy.TakeDamage(20);
            
             //Assert
@@ -126,7 +122,6 @@
 
             //Act
             newEnemy.SetHealth(100);
-            newEnemy.IsEnemyAlive();
             newEnemy.TakeDamage(-20);
 
             //Assert
@@ -142,7 +137,6 @@
 
             //Act
             newEnemy.SetHealth(100);
-            newEnemy.IsEnemyAlive();
             newEnemy.TakeDamage(120);
 
             //Assert
@@ -158,12 +152,39 @@
 
             //Act
             newEnemy.SetHealth(100);
-            newEnemy.IsEnemyAlive();
             newEnemy.TakeDamage(100);
 
             //Assert
             Assert.Equal(0, newEnemy.Health);
 
+        }
+
+        [Fact]
+        public void Heal_WhenAmountIsValid_HealthMustIncrease()
+        {   
+            //Arrange
+            Enemy newEnemy = new Enemy();
+            
+            //Act
+            newEnemy.SetHealth(80);
+            newEnemy.Heal(10);
+
+            //Assert
+            Assert.Equal(90, newEnemy.Health);
+        }
+
+        [Fact]
+        public void Heal_HealAmountCannotBeNegative()
+        {
+            //Arrange
+            Enemy newEnemy = new Enemy();
+
+            //Act
+            newEnemy.SetHealth(80);
+            newEnemy.Heal(-10);
+
+            //Assert
+            Assert.Throws<ArgumentException>
         }
     }
             

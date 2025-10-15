@@ -6,7 +6,6 @@
         // Attributes
 
 
-        //Properties
 
         //public int Health
         //{
@@ -25,11 +24,16 @@
         //    }
 
         //}
+
+
+        //Properties
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public bool IsAlive  { get; private set; }
+        public bool IsAlive => Health > 0;
         public int Health { get; private set; }
 
+        private const int MaxHealth = 100;
+        private const int MinHealth = 0;
 
 
         // Constructor
@@ -82,38 +86,30 @@
         public void TakeDamage(int damage)
         {
             if (int.IsNegative(damage))
-            {
+                throw new ArgumentException("Damage cannot be negative");
 
-            }
-            else
-            {
-                if (damage < Health && IsAlive == true)
+            
+            
+            
+            if (damage < Health && IsAlive == true)
                 {
-                    //Health = Math.Max(0, Health - damage);  //prende il massimo fra due numeri quindi se health va sotto 0 prende 0
-                    Health -= damage;
+                    Health = Math.Max(MinHealth, Health - damage);  //prende il massimo fra due numeri quindi se health va sotto 0 prende 0
+                    //Health -= damage;
                 }
                 else
                 {
-                    IsAlive = false;
+                    
                     Health = 0;
-                }
-
-            }
+                }            
 
         }
-            
 
-        public void IsEnemyAlive()
+        public void Heal(int healAmount)
         {
-            if (Health > 0)
-            {
-                IsAlive = true;
-            }
-            else
-            {
-                IsAlive = false;
-            }
-
+            if (int.IsNegative(healAmount))
+                throw new ArgumentException("heal amount cannot be negative");
+            Health = Math.Min(MaxHealth, Health += healAmount);
         }
+
     }
 }
