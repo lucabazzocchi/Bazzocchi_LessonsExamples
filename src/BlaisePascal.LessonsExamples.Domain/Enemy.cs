@@ -51,7 +51,7 @@
         public Enemy(string name, int health)
         {
             Name = CharacterValidator.ValidateName(name);
-            SetHealth(health);
+            Health = CharacterValidator.ValidateHealth(health);
 
         }
 
@@ -84,8 +84,8 @@
 
         public void TakeDamage(int damage)
         {
-            if (int.IsNegative(damage))
-                throw new ArgumentException("Damage cannot be negative");
+            if (damage < 0)
+                throw new ArgumentException("damage cannot be negative");
 
             
             

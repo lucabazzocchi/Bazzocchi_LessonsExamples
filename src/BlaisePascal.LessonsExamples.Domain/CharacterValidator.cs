@@ -14,11 +14,19 @@ namespace BlaisePascal.LessonsExamples.Domain
 
         public static string ValidateName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name.Trim())
+            if (string.IsNullOrWhiteSpace(name.Trim()))
                 throw new ArgumentException("name cannot be empty or null");
             return name;
         }
 
-        // TODO: Add validate health method
+        public static int ValidateHealth(int health) 
+        {
+            if (health < MinHealth || health > MaxHealth)
+                throw new ArgumentOutOfRangeException(nameof(health), $"health must be between {MinHealth} and {MaxHealth}");
+            return health;
+        }
+
+
+        
     }
 }

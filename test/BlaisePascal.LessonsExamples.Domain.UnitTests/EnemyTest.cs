@@ -1,4 +1,6 @@
-﻿namespace BlaisePascal.LessonsExamples.Domain.UnitTests
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace BlaisePascal.LessonsExamples.Domain.UnitTests
 {
     public class EnemyTest
     {
@@ -13,7 +15,7 @@
             newEnemy.SetName("Stefano");
 
             //Assert
-            Assert.Equal("Stefano", newEnemy.GetName());
+            Assert.Equal("Stefano", newEnemy.Name);
         
         }
 
@@ -24,7 +26,7 @@
             Enemy newEnemy = new Enemy();
           
             //Assert
-            Assert.Null(newEnemy.GetName());
+            Assert.Null(newEnemy.Name);
         }
 
         [Fact]
@@ -35,7 +37,7 @@
 
             newEnemy.SetName(" ");
 
-            Assert.Null(newEnemy.GetName());
+            Assert.Null(newEnemy.Name);
         }
 
         
@@ -82,7 +84,7 @@
 
             //Assert
             Assert.Equal(100, newEnemy.Health);
-
+            Assert.True(newEnemy.IsAlive);
 
         }
         [Fact]
@@ -96,11 +98,12 @@
 
             //Assert
             Assert.Equal(32, newEnemy.Health);
+            Assert.True(newEnemy.IsAlive);
 
         }
 
         [Fact]
-        public void TakeDamage_WhenTheEnemyIsAlive_AndDamageIsMinorThanHealthThenTakeDamage()
+        public void EnemyTakeDamage_WhenTheEnemyIsAlive_AndDamageIsMinorThanHealthThenTakeDamage()
         {
             //Arrange
             Enemy newEnemy = new Enemy();
@@ -115,22 +118,19 @@
         }
 
         [Fact]
-        public void TakeDamage_WhenDamageIsNegativeHealthDoesNotDecrease()
+        public void EnemyTakeDamage_WhenDamageIsNegative_ShouldThrowAgumentException()
         {
             //Arrange
-            Enemy newEnemy = new Enemy();
+            Enemy newEnemy = new Enemy("Goblin");
+            int damage = -5;           
 
-            //Act
-            newEnemy.SetHealth(100);
-            newEnemy.TakeDamage(-20);
-
-            //Assert
-            Assert.Equal(100, newEnemy.Health);
-
+            //Assert          
+            Assert.Throws<ArgumentException>(() => newEnemy.TakeDamage(damage));
         }
+           
 
         [Fact]
-        public void TakeDamage_WhenDamageIsBiggerThanHealth_HealthIs0()
+        public void EnemyTakeDamage_WhenDamageIsBiggerThanHealth_HealthIs0()
         {
             //Arrange
             Enemy newEnemy = new Enemy();
@@ -141,11 +141,11 @@
 
             //Assert
             Assert.Equal(0, newEnemy.Health);
-
+            Assert.False(newEnemy.IsAlive);
         }
 
         [Fact]
-        public void TakeDamage_WhenDamageIsEqualToHealth_HealthIs0()
+        public void EnemyTakeDamage_WhenDamageIsEqualToHealth_HealthIs0()
         {
             //Arrange
             Enemy newEnemy = new Enemy();
@@ -156,11 +156,12 @@
 
             //Assert
             Assert.Equal(0, newEnemy.Health);
+            Assert.False(newEnemy.IsAlive);
 
         }
 
         [Fact]
-        public void Heal_WhenAmountIsValid_HealthMustIncrease()
+        public void EnemyHeal_WhenAmountIsValid_HealthMustIncrease()
         {   
             //Arrange
             Enemy newEnemy = new Enemy();
@@ -174,17 +175,39 @@
         }
 
         [Fact]
-        public void Heal_HealAmountCannotBeNegative()
+        public void EnemyHeal_HealAmountCannotBeNegative()
         {
             //Arrange
             Enemy newEnemy = new Enemy();
+            int healAmount = -1;
 
             //Act
             newEnemy.SetHealth(80);
-            newEnemy.Heal(-10);
 
             //Assert
+
+            Assert.Throws<ArgumentException>(() => newEnemy.Heal(healAmount));
+
+        }
+
+
+        [Fact]
+        public void EnemyHeal_WhenHealAmountIsGreaterThanMaxHealth_HealthIsEqualToMaxHealth()
+        {
+            //Arrange
+            Enemy newEnemy = new Enemy();
             
+
+            //Act
+            newEnemy.SetHealth(100);
+            newEnemy.Heal(120);
+
+
+            //Assert
+            Assert.Equal(100, newEnemy.Health);
+            
+           
+
         }
     }
             
